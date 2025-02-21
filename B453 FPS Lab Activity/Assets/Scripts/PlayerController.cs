@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce;
     [SerializeField] float gravity = 9.81f;
 
+    [SerializeField] Rigidbody rb;
     public int SpareRounds { get => spareRounds; set => spareRounds = value; }
 
 
@@ -182,5 +183,19 @@ public class PlayerController : MonoBehaviour
 
         **/
         #endregion
+
+             
+
+        
     }
+    void OnCollisionEnter(Collision other)
+    {
+       
+        if (other.gameObject.GetComponent<ITriggerable>() != null)
+        {
+            other.gameObject.GetComponent<ITriggerable>().Trigger();
+        }
+    }
+
+
 }

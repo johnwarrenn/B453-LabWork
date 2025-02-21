@@ -7,7 +7,7 @@ public abstract class Weapon : MonoBehaviour
     [SerializeField] protected Transform firePoint;
 
     // How much damage this weapon does.
-    [SerializeField] protected float damage;
+    [SerializeField] protected int damage;
 
     // The range of this weapon.
     [SerializeField] protected float range;
@@ -26,13 +26,13 @@ public abstract class Weapon : MonoBehaviour
     protected void Start()
     {
         //Updates the UI at the start.
-        UIManager.Instance.UpdateAmmoUI(bulletCount, playerController.SpareRounds);
+        //UIManager.Instance.UpdateAmmoUI(bulletCount, playerController.SpareRounds);
     }
 
     //Handles the shooting behavior of the weapon.
     protected virtual void Shoot()
     {
-        UIManager.Instance.UpdateAmmoUI(bulletCount, playerController.SpareRounds);
+        // UIManager.Instance.UpdateAmmoUI(bulletCount, playerController.SpareRounds);
         if (bulletCount <= 0)
         {
             Reload();
