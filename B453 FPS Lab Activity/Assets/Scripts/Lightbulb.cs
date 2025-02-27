@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Lightbulb : MonoBehaviour, IDamagable
 {
-
     [SerializeField] GameObject light;
     private int health = 50;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
