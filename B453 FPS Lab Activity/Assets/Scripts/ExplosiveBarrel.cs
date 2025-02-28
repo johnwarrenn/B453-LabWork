@@ -7,6 +7,16 @@ public class ExplosiveBarrel : Triggers
 
     [SerializeField] ParticleSystem explosion; // Reference to the explosion particle system.
 
+    public void Awake()
+    {
+        MyEvents.someEvent.AddListener(React);
+    }
+
+    public void React(int x)
+    {
+        Debug.Log("3");
+    }
+
     protected override void OneShotTrigger()
     {
         if (!canTrigger) return;

@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using UnityEditor.UI;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -9,8 +11,13 @@ public class EnemyAi : MonoBehaviour
 
     [SerializeField, Min(5)] float attackRange = 5f;
 
+    public GameObject[] waypoints;
+    private int waypointIndex = 0;
+
     private NavMeshAgent agent;
     private Transform player;
+    private RaycastHit scan;
+    private Coroutine walk;
 
     private void Awake()
     {
@@ -24,19 +31,39 @@ public class EnemyAi : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(transform.position, player.position) <= agent.stoppingDistance)
+        Debug.DrawRay(transform.position, transform.forward * attackRange, Color.red, 0.1f);
+
+        if (Physics.Raycast(transform.position, transform.forward, out scan, attackRange))
         {
-            Attack();
+            if (scan.collider.CompareTag("Player"))
+            {
+                Move();
+                Attack();
+            }
+                
         }
         else
         {
-            Move();
+            StartCoroutine(Patrol());
+            
         }
     }
 
     private void Move()
     {
         agent.SetDestination(player.position);
+    }
+
+    private IEnumerator<int> Patrol() 
+    {
+        if (waypointIndex >= waypoints.Length)
+                {
+                waypointIndex = 0;
+                }
+
+        agent.SetDestination(waypoints[waypointIndex].transform.position);
+
+        yield return waypointIndex++;
     }
 
     private void Attack()
